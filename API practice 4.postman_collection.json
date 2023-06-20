@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "dce2d8c4-83bc-49ba-9375-1c14bcebe5cd",
+		"name": "API practice 4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27913516"
+	},
+	"item": [
+		{
+			"name": "practice 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.variables.get(\"variable_key\");\r",
+							"pm.globals.get(\"manchester\");\r",
+							"pm.collectionVariables.get(\"new york\");\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"\r",
+							"    var jsonObject = xml2Json(responseBody);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://api.openweathermap.org?manchester=city",
+					"protocol": "http",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"query": [
+						{
+							"key": "manchester",
+							"value": "city"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
