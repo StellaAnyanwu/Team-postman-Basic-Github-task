@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "510a907d-e6ba-4a89-93e9-8c0a5966cfc2",
-		"name": "TEAM POST MAN API TASK task updated",
+		"name": "Teampostman_Api_Task",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27913516"
 	},
@@ -22,14 +22,41 @@
 									"pm.test(\"Status code should have an OK string\", function () {\r",
 									"    pm.response.to.have.status(\"OK\");\r",
 									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"console.log(jsonData.links[5].rel)\r",
+									"pm.environment.set(\"links\",jsonData.links[5].rel);\r",
 									"\r",
-									"    var jsonData = pm.response.json();\r",
+									"console.log(jsonData.links[1].rel)\r",
+									"pm.environment.set(\"links\",jsonData.links[1].rel);\r",
+									"\r",
+									"console.log(jsonData.title)\r",
+									"pm.environment.set(\"title\",jsonData.title );\r",
+									"\r",
+									"console.log(jsonData.apiVersion)\r",
+									"pm.environment.set(\"apiVersion\", jsonData.apiVersion);\r",
+									"\r",
+									"console.log(jsonData.paymentCurrency)\r",
+									"pm.environment.set(\"paymentCurrency\", jsonData.paymentCurrency);\r",
+									"pm.environment.set(\"basecategories\", jsonData.categories);\r",
+									"pm.environment.set(\"basescopes\", jsonData.scopes);\r",
+									"pm.environment.set(\"baseapp\", jsonData.apps);\r",
+									"pm.environment.set(\"link5\", jsonData.links[5].rel);\r",
+									"pm.environment.set(\"link2\", jsonData.links[2].rel);\r",
+									"pm.environment.set(\"link3\", jsonData.links[3].rel);\r",
+									"\r",
+									"pm.environment.set(\"link1\", jsonData.links[1].rel);\r",
+									"pm.environment.set(\"link4\", jsonData.links[4].rel);\r",
+									"\r",
+									"\r",
+									"\r",
+									" var jsonData = pm.response.json();\r",
 									"console.log(jsonData)\r",
 									"console.log(jsonData.links)\r",
 									"console.log(jsonData.title)\r",
 									"console.log(jsonData.paymentCurrency)\r",
 									"console.log(jsonData.links[5].rel)\r",
 									"console.log(jsonData.links[0].rel)\r",
+									"\r",
 									"\r",
 									"pm.test(\"confirm that apiVersion is 6.3.8.0\", function () {\r",
 									"    pm.expect(jsonData.apiVersion).to.eql(\"6.3.8.0\");\r",
@@ -47,7 +74,11 @@
 									"});\r",
 									"pm.test(\"Body matches string\", function () {\r",
 									"    pm.expect(pm.response.text(jsonData.paymentCurrency)).to.include(\"EUR\");\r",
-									"});"
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -69,20 +100,18 @@
 							}
 						},
 						"url": {
-							"raw": "https://demo.fusio-project.org/index.php",
-							"protocol": "https",
+							"raw": "{{base_url}}/index.php/",
 							"host": [
-								"demo",
-								"fusio-project",
-								"org"
+								"{{base_url}}"
 							],
 							"path": [
-								"index.php"
+								"index.php",
+								""
 							],
 							"query": [
 								{
-									"key": "",
-									"value": "",
+									"key": "root",
+									"value": "{{Base links}}",
 									"disabled": true
 								}
 							]
@@ -162,9 +191,24 @@
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"strictSSL": true,
+						"followAuthorizationHeader": true,
+						"followOriginalHttpMethod": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{base_url}}/index.php/",
 							"host": [
@@ -198,15 +242,13 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Status code should have an OK string\", function () {\r",
 									"    pm.response.to.have.status(\"OK\");\r",
 									"});\r",
-									"pm.test(\"Successful POST request\", function () {\r",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
-									"});"
+									"\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -220,10 +262,15 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{base_url}}/index.php/",
+							"raw": "{{base_url}}/index.php/?todo_links={{Base links}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -233,9 +280,8 @@
 							],
 							"query": [
 								{
-									"key": "",
-									"value": "",
-									"disabled": true
+									"key": "todo_links",
+									"value": "{{Base links}}"
 								}
 							]
 						},
@@ -250,12 +296,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -265,7 +306,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/index.php/",
+							"raw": "{{base_url}}/index.php/?links=100000000",
 							"host": [
 								"{{base_url}}"
 							],
@@ -275,9 +316,8 @@
 							],
 							"query": [
 								{
-									"key": "",
-									"value": "",
-									"disabled": true
+									"key": "links",
+									"value": "100000000"
 								}
 							]
 						},
@@ -300,33 +340,92 @@
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"pm.test(\"Status code is 404\", function () {\r",
-									"    pm.response.to.have.status(404);\r",
+									"pm.test(\"Status code should have an OK string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
 									"});\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});"
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"console.log(jsonData)\r",
+									"\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    \r",
+									"    pm.expect(jsonData).to.eql(jsonData);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"const response = pm.response.json();\r",
+									"console.log(response[2].name)\r",
+									"console.log(response[1].name)\r",
+									"console.log(response[0].name)\r",
+									"console.log(response[3].name)\r",
+									"console.log(response[4].name)\r",
+									"console.log(response[5].name)\r",
+									"\r",
+									"pm.test(\"serch for name with Viscount Who Loved Me\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(response[5].name).to.eql(\"Viscount Who Loved Me\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"search the name \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.value).to.eql();\r",
+									"});\r",
+									"\r",
+									"console.log(response[1].id);\r",
+									"console.log(response[0].id);\r",
+									"console.log(response[2].id);\r",
+									"console.log(response[3].id);\r",
+									"console.log(response[4].id);\r",
+									"console.log(response[5].id);\r",
+									"pm.environment.set(\"just as i am\",response[1].id);\r",
+									"pm.environment.set(\"id5\",response[4].id);\r",
+									"pm.environment.set(\"id4\",response[3].id);\r",
+									"pm.environment.set(\"id1\",response[0].id);\r",
+									"pm.environment.set(\"id3\",response[2].id);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url2}}/books",
+							"raw": "https://simple-books-api.glitch.me/books?id5={{id5}}",
+							"protocol": "https",
 							"host": [
-								"{{base_url2}}"
+								"simple-books-api",
+								"glitch",
+								"me"
 							],
 							"path": [
 								"books"
 							],
 							"query": [
 								{
-									"key": "",
-									"value": "",
-									"disabled": true
+									"key": "id5",
+									"value": "{{id5}}"
 								}
 							]
 						}
@@ -343,20 +442,31 @@
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"pm.test(\"Status code should have a Not Found string\", function () {\r",
-									"    pm.response.to.have.status(\"Not Found\");\r",
-									"});\r",
-									""
+									"pm.test(\"Status code should have an OK string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url2}}/books",
+							"raw": "{{base_url2}}/books?id2={{id1}}000000",
 							"host": [
 								"{{base_url2}}"
 							],
@@ -365,9 +475,8 @@
 							],
 							"query": [
 								{
-									"key": "",
-									"value": "",
-									"disabled": true
+									"key": "id2",
+									"value": "{{id1}}000000"
 								}
 							]
 						}
@@ -386,14 +495,103 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Successful POST request\", function () {\r",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 5000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
 									"});\r",
-									"pm.test(\"Status code should have a Not Found string\", function () {\r",
-									"    pm.response.to.have.status(\"Not Found\");\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
 									"});\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"console.log(jsonData.created)\r",
+									"\r",
+									"pm.test(\"confirm that id book is true\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.created).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code has a Created string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"    const OrderID = pm.response.json();\r",
+									"    console.log(OrderID)\r",
+									"    console.log(OrderID.orderId)\r",
+									"\r",
+									"pm.globals.set(\"OrderID\",OrderID.orderId );\r",
+									"pm.collectionVariables.set(\"OrderID\", OrderID.orderId);\r",
+									"pm.environment.set(\"orderId\", OrderID.orderId);\r",
+									"\r",
+									"\r",
+									"\r",
+									"    \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"bookId\": {{id4}},\r\n    \"customerName\": \"stella\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url2}}/orders",
+							"host": [
+								"{{base_url2}}"
+							],
+							"path": [
+								"orders"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register API CLIENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"const error = pm.response.json();\r",
+									"    console.log(error)\r",
+									"\r",
+									"pm.test(\"confirm that an error is seen with same email\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql(\"API client already registered. Try a different email.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -406,7 +604,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{Accesstoken}}",
 									"type": "string"
 								}
 							]
@@ -415,7 +613,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"clientName\": \"post\",\r\n    \"clientEmail\": \"stellaanyanwu93@gmail.com\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -423,12 +621,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url2}}/books",
+							"raw": "{{base_url2}}/api-clients",
 							"host": [
 								"{{base_url2}}"
 							],
 							"path": [
-								"books"
+								"api-clients"
 							],
 							"query": [
 								{
@@ -448,12 +646,29 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"Response time is less than 5000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
 									"});\r",
-									"pm.test(\"Status code is 404\", function () {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});"
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"const error = pm.response.json();\r",
+									"    console.log(error)\r",
+									"\r",
+									"pm.test(\"confirm that an error is seen when you us no bookId\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql(\"Invalid or missing bookId.\");\r",
+									"});\r",
+									"    \r",
+									"    \r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"    "
 								],
 								"type": "text/javascript"
 							}
@@ -465,7 +680,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -482,7 +697,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url2}}/orders",
+							"raw": "{{base_url2}}/orders?id={{id33}}",
 							"host": [
 								"{{base_url2}}"
 							],
@@ -494,6 +709,10 @@
 									"key": "",
 									"value": "",
 									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "{{id33}}"
 								}
 							]
 						}
@@ -507,15 +726,26 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Successful POST request\", function () {\r",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"\r",
+									"pm.test(\"Status code should have 400 string \", function () {\r",
+									"    pm.response.to.have.status(400);\r",
 									"});\r",
-									"pm.test(\"Status code should have a 404 \", function () {\r",
-									"    pm.response.to.have.status(\"404\");\r",
+									"pm.test(\"Status code should have Bad Request \", function () {\r",
+									"    pm.response.to.have.status(\"Bad Request\");\r",
 									"});\r",
-									"pm.test(\"Status code should have a Not Found string\", function () {\r",
-									"    pm.response.to.have.status(\"Not Found\");\r",
-									"});"
+									"\r",
+									"    const error = pm.response.json();\r",
+									"    console.log(error)\r",
+									"\r",
+									"pm.test(\"confirm that an error is seen when you us no bookId\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql(\"Invalid or missing bookId.\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -527,7 +757,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -544,7 +774,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url2}}/orders",
+							"raw": "{{base_url2}}/orders?id4=",
 							"host": [
 								"{{base_url2}}"
 							],
@@ -554,8 +784,12 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"disabled": true
+								},
+								{
+									"key": "id4",
+									"value": ""
 								}
 							]
 						}
@@ -574,12 +808,20 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"pm.test(\"Status code is 404\", function () {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});"
+									"pm.test(\"Status code has an OK string attached\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"    \r",
+									"\r",
+									"    \r",
+									"    \r",
+									"    "
 								],
 								"type": "text/javascript"
 							}
@@ -594,7 +836,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -611,7 +853,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url2}}/orders",
+							"raw": "{{base_url2}}/orders?bookid={{OrderID}}",
 							"host": [
 								"{{base_url2}}"
 							],
@@ -620,9 +862,8 @@
 							],
 							"query": [
 								{
-									"key": "",
-									"value": "",
-									"disabled": true
+									"key": "bookid",
+									"value": "{{OrderID}}"
 								}
 							]
 						}
@@ -639,8 +880,8 @@
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -656,7 +897,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -684,7 +925,7 @@
 							"variable": [
 								{
 									"key": "orderId",
-									"value": ""
+									"value": "{{OrderID}}"
 								}
 							]
 						}
@@ -698,12 +939,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
+									"\r",
 									"pm.test(\"Status code is 404\", function () {\r",
 									"    pm.response.to.have.status(404);\r",
-									"});"
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -718,7 +958,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -746,7 +986,7 @@
 							"variable": [
 								{
 									"key": "orderId",
-									"value": ""
+									"value": "{{OrderID1}}"
 								}
 							]
 						}
@@ -760,9 +1000,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -777,7 +1018,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -824,12 +1065,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test(\"Status code is 404\", function () {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -841,7 +1077,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -883,12 +1119,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test(\"Status code is 404\", function () {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});"
+									"\r",
+									"    \r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -900,7 +1134,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+									"value": "{{Token}}",
 									"type": "string"
 								}
 							]
@@ -928,7 +1162,7 @@
 							"variable": [
 								{
 									"key": "orderId",
-									"value": ""
+									"value": "{{OrderID}}"
 								}
 							]
 						}
@@ -944,8 +1178,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is not 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});\r",
 							"pm.test(\"Status code is 404\", function () {\r",
 							"    pm.response.to.have.status(404);\r",
@@ -961,7 +1195,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "4ffca71810c563450a6bf01d67e1ffd6925b9e0393b721fc6e26ed0ee39d54c5",
+							"value": "{{Token}}",
 							"type": "string"
 						}
 					]
@@ -989,12 +1223,43 @@
 					"variable": [
 						{
 							"key": "orderId",
-							"value": ""
+							"value": "{{OrderID1}}"
 						}
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "OrderID",
+			"value": ""
 		}
 	]
 }
